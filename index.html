@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ITGuru | Architect of OneOS</title>
+    <style>
+        :root {
+            --neon-cyan: #00ffff;
+            --neon-gold: #ffaa00;
+            --deep-space: #020205;
+            --glass: rgba(255, 255, 255, 0.05);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--deep-space);
+            color: #ffffff;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* --- Animated Star Backdrop --- */
+        #starfield {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        /* --- Navigation --- */
+        nav {
+            padding: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-family: 'Courier New', monospace;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--neon-cyan);
+            text-shadow: 0 0 10px var(--neon-cyan);
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            letter-spacing: 10px;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #fff, var(--neon-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-family: 'Courier New', monospace;
+            color: var(--neon-gold);
+            font-size: 1.2rem;
+        }
+
+        /* --- Service Cards --- */
+        .services {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 100px 10% ;
+        }
+
+        .card {
+            background: var(--glass);
+            border: 1px solid rgba(0, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            transition: 0.3s;
+            backdrop-filter: blur(5px);
+        }
+
+        .card:hover {
+            border-color: var(--neon-cyan);
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.1);
+        }
+
+        .card h3 {
+            color: var(--neon-cyan);
+            margin-bottom: 15px;
+        }
+
+        /* --- Call to Action --- */
+        .cta {
+            text-align: center;
+            padding: 100px 20px;
+            background: linear-gradient(transparent, rgba(0, 255, 255, 0.05));
+        }
+
+        .btn {
+            padding: 15px 40px;
+            border: 1px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: var(--neon-cyan);
+            color: black;
+            box-shadow: 0 0 20px var(--neon-cyan);
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="starfield"></canvas>
+
+<nav>
+    <div class="logo">ITGURU_ARCHITECT</div>
+    <div>
+        <a href="#" style="color: white; text-decoration: none; margin-left: 20px;">WORKFORCE</a>
+        <a href="#" style="color: white; text-decoration: none; margin-left: 20px;">LOGIC</a>
+    </div>
+</nav>
+
+<section class="hero">
+    <h1>ITGURU</h1>
+    <p>> DEPLOYING SLL INTELLIGENCE NETWORKS</p>
+</section>
+
+<section class="services">
+    <div class="card">
+        <h3>SLL Integration</h3>
+        <p>Custom Small Language Logic deployment for autonomous workflow optimization.</p>
+    </div>
+    <div class="card">
+        <h3>OS Architecture</h3>
+        <p>Building specialized operating environments tailored for AI-human synergy.</p>
+    </div>
+    <div class="card">
+        <h3>Strategic Synthesis</h3>
+        <p>Merging HostGPT architecture with Gemini-class strategic planning.</p>
+    </div>
+</section>
+
+<section class="cta">
+    <a href="mailto:admin@itguru.com" class="btn">Initialize Contact</a>
+</section>
+
+<script>
+    const canvas = document.getElementById('starfield');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let stars = [];
+    for(let i = 0; i < 200; i++) {
+        stars.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            z: Math.random() * canvas.width // Depth
+        });
+    }
+
+    function moveStars() {
+        ctx.fillStyle = "black";
+        ctx.fillRect(0,0, canvas.width, canvas.height);
+        
+        stars.forEach(s => {
+            s.z -= 2;
+            if (s.z <= 0) s.z = canvas.width;
+            
+            // 3D Projection
+            let sx = (s.x - canvas.width/2) * (canvas.width/s.z) + canvas.width/2;
+            let sy = (s.y - canvas.height/2) * (canvas.width/s.z) + canvas.height/2;
+            let size = (1 - s.z/canvas.width) * 3;
+
+            ctx.fillStyle = "white";
+            ctx.beginPath();
+            ctx.arc(sx, sy, size, 0, Math.PI*2);
+            ctx.fill();
+        });
+        requestAnimationFrame(moveStars);
+    }
+    moveStars();
+</script>
+
+</body>
+</html>
